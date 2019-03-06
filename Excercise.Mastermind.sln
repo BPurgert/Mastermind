@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excercise.Mastermind", "Excercise.Mastermind\Excercise.Mastermind.csproj", "{70BB1448-30B2-4BFD-B615-0EE66DF5723A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excercise.Mastermind.Tests", "Excercise.Mastermind.Tests\Excercise.Mastermind.Tests.csproj", "{0C2388A3-29C6-4B1D-8D17-77396F608E67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{70BB1448-30B2-4BFD-B615-0EE66DF5723A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70BB1448-30B2-4BFD-B615-0EE66DF5723A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70BB1448-30B2-4BFD-B615-0EE66DF5723A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C2388A3-29C6-4B1D-8D17-77396F608E67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C2388A3-29C6-4B1D-8D17-77396F608E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C2388A3-29C6-4B1D-8D17-77396F608E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C2388A3-29C6-4B1D-8D17-77396F608E67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
