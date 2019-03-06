@@ -8,8 +8,13 @@ namespace Excercise.Mastermind
     {
         public List<CombinationDigit> CombinationDigits { get; set; }
 
+        /// <summary>
+        /// Create a combination from a string. This method expects the string to be integers. If a non integer is passed in it will be zero.
+        /// </summary>
+        /// <param name="combo"></param>
         public Combination(string combo)
         {
+            combo = combo.Trim();
             CombinationDigits = new List<CombinationDigit>();
             for (int i = 0; i<combo.Length; i++)
             {

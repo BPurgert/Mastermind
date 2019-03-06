@@ -11,12 +11,12 @@ namespace Excercise.Mastermind
         public event EventHandler PrintLoser;
         public event EventHandler PrintHint;
 
-        public readonly int answerLength;
-        public readonly int numberOfAttempts;
+        public int answerLength;
+        public int numberOfAttempts;
         public readonly int lowestPossibleValue;
         public readonly int highestPossibleValue;
         private  Combination _answer;
-        private int _attempt;
+        internal int attempt;
 
         private bool _playerHasWon = false;
         public bool PlayerHasWon { get { return _playerHasWon; } } 
@@ -40,11 +40,19 @@ namespace Excercise.Mastermind
         {
             int[] answer = CreateRandomAnswer(lowestPossibleValue, highestPossibleValue, answerLength);
             _answer = new Combination(answer);
-            _attempt = 0;
+            attempt = 0;
             _playerHasWon = false;
 
             DebugPrintAnswer();
             DisplayWelcome(this, null);
+        }
+
+        //This method is for unit testing only.
+        internal void SetAnswer(int[] answer, int numberOfAttempts)
+        {
+            _answer = new Combination(answer);
+            answerLength = answer.Length;
+            this.numberOfAttempts = numberOfAttempts;
         }
 
         private int[] CreateRandomAnswer(int lowestPossibleValue, int highestPossibleValue, int length)
@@ -62,11 +70,11 @@ namespace Excercise.Mastermind
         public void Guess(string userInput)
         {
             bool userIsCorrect = false;
-            if (_attempt < numberOfAttempts)
+            if (attempt < numberOfAttempts)
             {
                 if (UserInputIsValid(userInput))
                 {
-                    _attempt++; //Only count valid guesses.
+                    attempt++; //Only count valid guesses.
                     Combination userGuess = new Combination(userInput); //create a new Combination object. We'll use that to compare to the answer.
                     userGuess.CompareToAnswer(_answer, out int correctDigitsInTheCorrectPlace, out int correctDigitsInTheWrongPlace, out userIsCorrect);
 
@@ -95,7 +103,7 @@ namespace Excercise.Mastermind
 
         public bool ContinueGame()
         {
-            if (_attempt >= numberOfAttempts) return false;
+            if (attempt >= numberOfAttempts) return false;
 
             if (PlayerHasWon) return false;
 
