@@ -32,6 +32,12 @@ namespace Excercise.Mastermind
 
                 userWantsToPlay = PromptUserToPlayAgainIfGameIsOver(userWantsToPlay, game);
             }
+
+            game.DisplayWelcome -= PrintWelcome;
+            game.PrintReminder -= PrintReminder;
+            game.PrintWinner -= PrintWinner;
+            game.PrintHint -= PrintHint;
+            game.PrintLoser -= PrintLoser;
         }
 
         private static bool PromptUserToPlayAgainIfGameIsOver(bool userWantsToPlay, Game game)
