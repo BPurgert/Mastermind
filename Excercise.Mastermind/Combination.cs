@@ -16,10 +16,9 @@ namespace Excercise.Mastermind
         {
             combo = combo.Trim();
             CombinationDigits = new List<CombinationDigit>();
-            for (int i = 0; i<combo.Length; i++)
+            for (int i = 0; i < combo.Length; i++)
             {
-                int result = 0;
-                int.TryParse(combo[i].ToString(), out result);
+                int.TryParse(combo[i].ToString(), out int result);
                 CombinationDigits.Add(new CombinationDigit(i, result));
             }
         }
@@ -41,11 +40,11 @@ namespace Excercise.Mastermind
             //this is the guess
             foreach (CombinationDigit digit in CombinationDigits)
             {
-                if(answer.CombinationDigits.Any(answerDigit => answerDigit.Sequence == digit.Sequence && answerDigit.Value == digit.Value))
+                if (answer.CombinationDigits.Any(answerDigit => answerDigit.Sequence == digit.Sequence && answerDigit.Value == digit.Value))
                 {
                     correctDigitInCorrectPlace++;
                 }
-                else if(answer.CombinationDigits.Any(answerDigit => answerDigit.Sequence != digit.Sequence && answerDigit.Value == digit.Value))
+                else if (answer.CombinationDigits.Any(answerDigit => answerDigit.Sequence != digit.Sequence && answerDigit.Value == digit.Value))
                 {
                     correctDigitsInTheWrongPlace++;
                 }
@@ -56,7 +55,6 @@ namespace Excercise.Mastermind
             {
                 userIsCorrect = true;
             }
-            
         }
 
         public override string ToString()

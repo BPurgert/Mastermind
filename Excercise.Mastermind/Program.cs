@@ -2,9 +2,9 @@
 
 namespace Excercise.Mastermind
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             PlayGame();
         }
@@ -16,12 +16,7 @@ namespace Excercise.Mastermind
 
             var game = new Game(settings.AnswerLength, settings.LowestPossibleDigitValue, settings.HighestPossibleDigitValue, settings.NumberOfAttempts);
 
-            //wire up the events
-            game.DisplayWelcome += PrintWelcome;
-            game.PrintReminder += PrintReminder;
-            game.PrintWinner += PrintWinner;
-            game.PrintHint += PrintHint;
-            game.PrintLoser += PrintLoser;
+            SubscribeToEvents(game);
 
             game.NewGame(); //init the game.
 
@@ -33,11 +28,26 @@ namespace Excercise.Mastermind
                 userWantsToPlay = PromptUserToPlayAgainIfGameIsOver(userWantsToPlay, game);
             }
 
+            UnsubscribeFromEvents(game);
+        }
+
+        private static void UnsubscribeFromEvents(Game game)
+        {
             game.DisplayWelcome -= PrintWelcome;
             game.PrintReminder -= PrintReminder;
             game.PrintWinner -= PrintWinner;
             game.PrintHint -= PrintHint;
             game.PrintLoser -= PrintLoser;
+        }
+
+        private static void SubscribeToEvents(Game game)
+        {
+            //wire up the events
+            game.DisplayWelcome += PrintWelcome;
+            game.PrintReminder += PrintReminder;
+            game.PrintWinner += PrintWinner;
+            game.PrintHint += PrintHint;
+            game.PrintLoser += PrintLoser;
         }
 
         private static bool PromptUserToPlayAgainIfGameIsOver(bool userWantsToPlay, Game game)
@@ -60,7 +70,7 @@ namespace Excercise.Mastermind
             return userWantsToPlay;
         }
 
-        static bool PlayerWantsToQuit()
+        private static bool PlayerWantsToQuit()
         {
             Console.WriteLine();
             Console.WriteLine("Do you want to play again? YES/no");
@@ -75,9 +85,7 @@ namespace Excercise.Mastermind
             {
                 return false;
             }
-
         }
-
 
         private static void PrintWelcome(object sender, EventArgs e)
         {
@@ -119,15 +127,14 @@ namespace Excercise.Mastermind
             Console.WriteLine();
         }
 
-        private static string _mastermind = @"  _    _      _                                _        
-| |  | |    | |                              | |       
-| |  | | ___| | ___ ___  _ __ ___   ___      | |_ ___  
-| |/\| |/ _ \ |/ __/ _ \| '_ ` _ \ / _ \     | __/ _ \ 
+        private static readonly string _mastermind = @"  _    _      _                                _
+| |  | |    | |                              | |
+| |  | | ___| | ___ ___  _ __ ___   ___      | |_ ___
+| |/\| |/ _ \ |/ __/ _ \| '_ ` _ \ / _ \     | __/ _ \
 \  /\  /  __/ | (_| (_) | | | | | |  __/     | || (_) |
- \/  \/ \___|_|\___\___/|_| |_| |_|\___|      \__\___/ 
-                                                       
-                                                       
-___  ___          _                      _           _ 
+ \/  \/ \___|_|\___\___/|_| |_| |_|\___|      \__\___/
+
+___  ___          _                      _           _
 |  \/  |         | |                    (_)         | |
 | .  . | __ _ ___| |_ ___ _ __ _ __ ___  _ _ __   __| |
 | |\/| |/ _` / __| __/ _ \ '__| '_ ` _ \| | '_ \ / _` |

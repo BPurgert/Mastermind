@@ -1,9 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Excercise.Mastermind.Tests
 {
@@ -60,7 +57,7 @@ namespace Excercise.Mastermind.Tests
 
             //Assert
             Assert.AreEqual(1, _game.attempt); //verify we used one attempt
-            Assert.AreEqual(true, _game.ContinueGame()); //verify the game is still going. 
+            Assert.AreEqual(true, _game.ContinueGame()); //verify the game is still going.
             Assert.AreEqual(false, _game.PlayerHasWon); //verify the player did not win
         }
 
@@ -154,7 +151,6 @@ namespace Excercise.Mastermind.Tests
             Assert.AreEqual(true, _userLost); //We should be reminding the user of the rules.
         }
 
-
         //source: https://stackoverflow.com/a/730352
         private string RandomString(int size)
         {
@@ -196,6 +192,7 @@ namespace Excercise.Mastermind.Tests
         {
             _hint = hint.ToString();
         }
-        #endregion
+
+        #endregion " Event handlers "
     }
 }

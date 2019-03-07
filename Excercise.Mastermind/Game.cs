@@ -6,20 +6,24 @@ namespace Excercise.Mastermind
     {
         //Use events to abstract the fact this is a console game. The exception is the debug message, but that is OK.
         public event EventHandler DisplayWelcome;
+
         public event EventHandler PrintWinner;
+
         public event EventHandler PrintReminder;
+
         public event EventHandler PrintLoser;
+
         public event EventHandler PrintHint;
 
         public int answerLength;
         public int numberOfAttempts;
         public readonly int lowestPossibleValue;
         public readonly int highestPossibleValue;
-        private  Combination _answer;
+        private Combination _answer;
         internal int attempt;
 
         private bool _playerHasWon = false;
-        public bool PlayerHasWon { get { return _playerHasWon; } } 
+        public bool PlayerHasWon { get { return _playerHasWon; } }
 
         /// <summary>
         /// Creates a new Game with the parameters specified.
@@ -47,6 +51,60 @@ namespace Excercise.Mastermind
             DisplayWelcome(this, null);
         }
 
+        public void Guess(string userInput)
+        {
+            try
+            {
+                if (attempt < numberOfAttempts)
+                {
+                    if (UserInputIsValid(userInput))
+                    {
+                        ProcessUserInput(userInput);
+                    }
+                    else
+                    {
+                        PrintReminder(this, null); //Tell the user they entered an invalid guess.
+                    }
+                }
+
+                if (!_playerHasWon && !ContinueGame())
+                {
+                    PrintLoser(this, null); //The player didn't guess correctly and the game is over. Give them the bad news.
+                }
+            }
+            catch
+            {
+                PrintReminder(this, null); //Tell the user they entered an invalid guess.
+            }
+        }
+
+        private void ProcessUserInput(string userInput)
+        {
+            attempt++; //Only count valid guesses.
+            Combination userGuess = new Combination(userInput); //create a new Combination object. We'll use that to compare to the answer.
+            userGuess.CompareToAnswer(_answer, out int correctDigitsInTheCorrectPlace, out int correctDigitsInTheWrongPlace, out bool userIsCorrect);
+
+            if (userIsCorrect)
+            {
+                _playerHasWon = true;
+                PrintWinner(this, null);
+            }
+            else
+            {
+                string hint = GenerateHint(correctDigitsInTheCorrectPlace, correctDigitsInTheWrongPlace);
+                PrintHint(hint, null);
+            }
+        }
+
+        public bool ContinueGame()
+        {
+            if (attempt >= numberOfAttempts) return false;
+
+            if (PlayerHasWon) return false;
+
+            return true;
+        }
+
         //This method is for unit testing only.
         internal void SetAnswer(int[] answer, int numberOfAttempts)
         {
@@ -65,49 +123,6 @@ namespace Excercise.Mastermind
             }
 
             return answer;
-        }
-        
-        public void Guess(string userInput)
-        {
-            bool userIsCorrect = false;
-            if (attempt < numberOfAttempts)
-            {
-                if (UserInputIsValid(userInput))
-                {
-                    attempt++; //Only count valid guesses.
-                    Combination userGuess = new Combination(userInput); //create a new Combination object. We'll use that to compare to the answer.
-                    userGuess.CompareToAnswer(_answer, out int correctDigitsInTheCorrectPlace, out int correctDigitsInTheWrongPlace, out userIsCorrect);
-
-                    if (userIsCorrect)
-                    {
-                        _playerHasWon = true;
-                        PrintWinner(this, null);
-                    }
-                    else
-                    {
-                        string hint = GenerateHint(correctDigitsInTheCorrectPlace, correctDigitsInTheWrongPlace);
-                        PrintHint(hint, null);
-                    }
-                }
-                else
-                {
-                    PrintReminder(this, null); //Tell the user they entered an invalid guess.
-                }
-            }
-
-            if (!_playerHasWon && !ContinueGame())
-            {
-                PrintLoser(this, null); //The player didn't guess correctly and the game is over. Give them the bad news.
-            }
-        }
-
-        public bool ContinueGame()
-        {
-            if (attempt >= numberOfAttempts) return false;
-
-            if (PlayerHasWon) return false;
-
-            return true;
         }
 
         private string GenerateHint(int correctDigitsInTheCorrectPlace, int correctDigitsInTheWrongPlace)
@@ -136,8 +151,7 @@ namespace Excercise.Mastermind
         {
             if (string.IsNullOrWhiteSpace(userInput)) return false; //the user needs to enter a value
 
-            int intValue;
-            if (!int.TryParse(userInput, out intValue)) return false; //the value must be an integer
+            if (!int.TryParse(userInput, out int intValue)) return false; //the value must be an integer
 
             if (intValue < 0) return false; //the value must be zero or greater
 
@@ -154,6 +168,5 @@ namespace Excercise.Mastermind
             Console.Write($"You are build the application in debug mode. The answer is: {_answer.ToString()}");
             Console.WriteLine();
         }
-
     }
 }
