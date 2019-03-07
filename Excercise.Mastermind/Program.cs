@@ -63,10 +63,10 @@ namespace Excercise.Mastermind
                 else
                 {
                     //the user wants to play again.
+                    Console.Clear();
                     game.NewGame();
                 }
             }
-
             return userWantsToPlay;
         }
 
@@ -111,14 +111,12 @@ namespace Excercise.Mastermind
 
         private static void PrintWinner(object sender, EventArgs e)
         {
-            //todo
             Console.WriteLine("You win!");
         }
 
-        private static void PrintLoser(object sender, EventArgs e)
+        private static void PrintLoser(object answer, EventArgs e)
         {
-            //todo
-            Console.WriteLine("You lost.");
+            Console.WriteLine($"You lost. The answer was {answer}");
         }
 
         private static void PrintHint(object hint, EventArgs e)

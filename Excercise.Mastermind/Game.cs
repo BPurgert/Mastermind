@@ -69,7 +69,7 @@ namespace Excercise.Mastermind
 
                 if (!_playerHasWon && !ContinueGame())
                 {
-                    PrintLoser(this, null); //The player didn't guess correctly and the game is over. Give them the bad news.
+                    PrintLoser(_answer.ToString(), null); //The player didn't guess correctly and the game is over. Give them the bad news.
                 }
             }
             catch
