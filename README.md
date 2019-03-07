@@ -1,6 +1,6 @@
 # Mastermind
 
-This is a console based version of the game Mastermind. You'll have 10 changes to guess the four digit combination. The digits of the combination are between 1 and 6.
+This is a console based version of the game Mastermind. You'll have 10 changes to guess the four digit combination. The digits of the combination are between 1 and 6. Invalid guesses are not counted against your 10 changes. 
 
 A + sign is printed for each correct digit in the correct place. A - sign is printed for every digit that is part of the combination but in the wrong place. If a digit in your guess is not part of the combination nothing will be printed.
 
